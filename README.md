@@ -1,6 +1,10 @@
 # CloudFileEncryptionWrapper
 A bash script that handles gpg and tar and puts the output in the right place for syncing to a cloud provider whilst maintaining annonymous filenames.  This script does not do any syncing, just prepares them so that it doesn't matter so much whether you trust the cloud provider.
 
+## BIG WARNING
+
+Backup your encryption key pair somewhere other than in the cloud - if you loose it, your stumped.
+
 ## Instructions:
 
 Clone the code  
@@ -24,4 +28,15 @@ Variables that can be configured are:
 Dependencies:  
 > gnupg  
 > tar  
-> Dropbox or other cloud sync service  
+> Dropbox or other cloud sync service
+> crontab
+
+## Considerations
+
+Didn't want to re-encrypt everything following every check.  If no other reason - it is a waste of bandwidth.  But also, it could in theory be used in a differential style cryptanalysis attack which I probably don't understand well enough to explain here.
+
+Didn't want filenames to be exposed.  This makes it difficult to handle, but having salted filename hashes and an encrypted filename hash seems to work well enough.
+
+Wanted bandwidth efficiency where possible - hence the compression/tar.
+
+Wanted cloud provider independence.  This system just needs to know where the cloud provider will sync file from.
