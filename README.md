@@ -28,7 +28,7 @@ Variables that can be configured are:
 Dependencies:  
 > gnupg  
 > tar  
-> Dropbox or other cloud sync service
+> Dropbox or other cloud sync service   
 > crontab
 
 ## Considerations
