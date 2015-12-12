@@ -5,8 +5,10 @@ A bash script that handles gpg and tar and puts the output in the right place fo
 
 Clone the code  
 > git clone https://github.com/felixrr/CloudFileEncryptionWrapper.git  
+
 Configure it  
 > nano backup.sh  
+
 Add it to your crontab  
 > crontab -e  
 
