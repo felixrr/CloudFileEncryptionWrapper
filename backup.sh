@@ -9,11 +9,12 @@ filenamehashsalt="[YOURRANDOMSTRINGHERE]"
 
 # initialisation of global vars
 
+IFS=$'\n'
 changedetected=0
+cd $systembase
 touch Working/filelist.txt
 touch Working/oldfilelist.txt
-cd $systembase
-filelist=`find Files -not -name '\.*' -not -name '*~' -type f -name \* -print`
+filelist=`find Files -not -name '\.*' -not -name '*~' -type f -name \* -print | sed "s/ /\ /g"`
 
 # build file current list
 
