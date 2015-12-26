@@ -6,6 +6,7 @@ systembase="/home/[USERNAME]/CloudFileEncryptionWrapper/"
 syncbase="/home/[USERNAME]/CloudFileEncryptionWrapper/Dropbox/"
 keyID="0x[YOURKEYHERE]"
 filenamehashsalt="[YOURRANDOMSTRINGHERE]"
+debug=0
 
 # initialisation of global vars
 
@@ -31,8 +32,12 @@ for line in $(cat Working/filelist.txt); do
    name=`echo $line | awk -F ":" {'print $2'}`
    hashname=`echo $line | awk -F ":" {'print $3'}`
    comparison=`grep $line Working/oldfilelist.txt`
+   if [ $debug == 1 ]; then
+      echo "Comparison result= $comparison"
+      echo "grep $line Working/oldfilelist.txt"
+   fi
    if [ "$comparison" == "" ]; then
-      echo "Change detected in $name (hashname $hashname)"
+      echo "Change or new file detected in $name (hashname $hashname)"
       changedetected=1
       echo "Removing old compressed and encrypted files"
       rm -f Working/$hashname.tar.gz
@@ -43,7 +48,7 @@ for line in $(cat Working/filelist.txt); do
       gpg -r $keyID -ae Working/$hashname.tar.gz
       echo "Copying encrypted file to Sync folder"
       cp Working/$hashname.tar.gz.asc $syncbase
-   else
+   elif [ $debug == 1 ]; then
       file=`echo $line | awk -F ":" {'print $2'}`
       echo "No change in $file (hashname $hashname)"
    fi
